@@ -12,6 +12,8 @@ httpx = "^0.24.0"
 llama-index = "^0.6.8"
 ipython = "^8.13.2"
 pyright = "^1.1.308"
+pymongo = "^4.3.3"
+redis = "^4.5.5"
 
 [build-system]
 requires = ["poetry-core"]
