@@ -34,8 +34,6 @@ print('loading nodes')
 nodes = SimpleNodeParser().get_nodes_from_documents(documents)
 print('finished loading nodes')
 
-mongo_uri = "mongodb://127.0.0.1/db_docstore?replicaSet=eflex"
-
 storage_context = get_storage_context()
 
 print('saving documents to mongo')
