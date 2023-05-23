@@ -1,4 +1,4 @@
-from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader
+from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader, GPTListIndex
 from llama_index.storage.docstore import MongoDocumentStore
 from llama_index.storage.storage_context import StorageContext
 from llama_index.node_parser import SimpleNodeParser
@@ -18,6 +18,7 @@ documents = SimpleDirectoryReader(
   exclude_hidden=True,
   file_metadata=get_metadata,
   exclude=[
+    '**/tools/plcTester/public/**/*',
     '**/.git/**/*', 
     '**/node_modules/**/*', 
     "**/dist/**/*",
@@ -38,10 +39,7 @@ print('finished loading nodes')
 
 mongo_uri = "mongodb://127.0.0.1/db_docstore?replicaSet=eflex"
 
-print('saving documents to mongo')
 docstore = MongoDocumentStore.from_uri(uri=mongo_uri)
-docstore.add_documents(nodes)
-print('finished saving documents to mongo')
 
 index_store = MongoIndexStore.from_uri(mongo_uri)
 
@@ -57,8 +55,13 @@ storage_context = StorageContext.from_defaults(
   vector_store=vector_store
 )
 
+print('saving documents to mongo')
+storage_context.docstore.add_documents(nodes)
+print('finished saving documents to mongo')
+
 print('creating index')
-index = GPTVectorStoreIndex(nodes, storage_context=storage_context)
+GPTVectorStoreIndex(nodes, storage_context=storage_context)
+GPTListIndex(nodes, storage_context=storage_context)
 print('finished creating index')
 
 docstore.persist(persist_path="")

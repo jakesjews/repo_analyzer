@@ -1,12 +1,9 @@
-import nest_asyncio
 import sys
 from llama_index.storage.docstore import MongoDocumentStore
 from llama_index.storage.storage_context import StorageContext
 from llama_index.storage.index_store import MongoIndexStore
 from llama_index.vector_stores import RedisVectorStore
 from llama_index import load_index_from_storage
-
-nest_asyncio.apply()
 
 mongo_uri = "mongodb://127.0.0.1/db_docstore?replicaSet=eflex"
 
