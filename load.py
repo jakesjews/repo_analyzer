@@ -1,5 +1,5 @@
 import sys
-from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader, GPTListIndex
+from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader 
 from llama_index.node_parser import SimpleNodeParser
 from storage_context import get_storage_context
 
@@ -44,5 +44,4 @@ print('finished saving documents to mongo')
 
 print('creating index')
 GPTVectorStoreIndex(nodes, storage_context=storage_context)
-GPTListIndex(nodes, storage_context=storage_context)
 print('finished creating index')
