@@ -1,4 +1,5 @@
 import nest_asyncio
+import sys
 from llama_index.storage.docstore import MongoDocumentStore
 from llama_index.storage.storage_context import StorageContext
 from llama_index.storage.index_store import MongoIndexStore
@@ -22,5 +23,5 @@ storage_context = StorageContext.from_defaults(
 index = load_index_from_storage(storage_context)
 
 query_engine = index.as_query_engine()
-response = query_engine.query("What is a liveBuildStatus?")
+response = query_engine.query(sys.argv[1])
 print(response)

@@ -1,4 +1,3 @@
-import nest_asyncio
 from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader
 from llama_index.storage.docstore import MongoDocumentStore
 from llama_index.storage.storage_context import StorageContext
@@ -6,18 +5,27 @@ from llama_index.node_parser import SimpleNodeParser
 from llama_index.storage.index_store import MongoIndexStore
 from llama_index.vector_stores import RedisVectorStore
 
-nest_asyncio.apply()
-
 print('loading documents')
+
+def get_metadata(file_path):
+  return {
+    "file_path": file_path.replace('/Users/jacob/dev/eflexsystems/eflex2/', '')
+  }
 
 documents = SimpleDirectoryReader(
   '/Users/jacob/dev/eflexsystems/eflex', 
   recursive=True, 
   exclude_hidden=True,
+  file_metadata=get_metadata,
   exclude=[
+    '**/.git/**/*', 
+    '**/node_modules/**/*', 
+    "**/dist/**/*",
+    "**/.yarn/**/*",
     "*.jpg", "*.png", "*.zip", "*.svg", "*.pdf", "*.zip", "*.jpeg", "*.mp4", '*.deb', 
     '*.env', '*.ico', '*.job', '*.key', '*.mp3', '*.pem', '*.rpm', '*.tff', '*.urp', 
-    '*.webm', '*.woff2', '*.wrongextension', '*.gz', '*.cab'
+    '*.webm', '*.woff2', '*.wrongextension', '*.gz', '*.cab', '*.bmp', '*.dds', '*.ttf',
+    '*.log',
   ],
 ).load_data()
 
